@@ -62,14 +62,14 @@ function loadsvg (src) {
             if (wd > hd) { // wider
                 var z = parseInt(istyle.height) / parseInt(svgstyle.width)
                     * parseInt(istyle.width) / parseInt(svgstyle.height)
-                    * 0.8
+                    * 0.6
                 ;
                 svg.style.zoom = z;
             }
             else { // taller
                 var z = parseInt(istyle.width) / parseInt(svgstyle.height)
                     * parseInt(istyle.height) / parseInt(svgstyle.width)
-                    * 0.8
+                    * 0.6
                 ;
                 svg.style.zoom = z;
             }
