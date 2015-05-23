@@ -7,7 +7,8 @@ var main = require('main-loop');
 var state = {
     current: Number(location.pathname.slice(1) || '0') || 0,
     slides: [],
-    svgs: {}
+    svgs: {},
+    loops: []
 };
 var loop = main(state, render, require('virtual-dom'));
 document.body.appendChild(loop.target);
@@ -28,7 +29,12 @@ xhr('/slides.md', function (err, res, body) {
 
 function loadsvg (src) {
     var href = url.resolve(location.protocol + '//' + location.host, src);
+    for (var i = 0; i < state.loops.length; i++) {
+        clearInterval(state.loops[i]);
+    }
+    state.loops.splice(0);
     var iv = setInterval(loop, 100);
+    state.loops.push(iv);
     return h('iframe', { src: href }); // haha onload right
     
     function loop () {
@@ -40,6 +46,8 @@ function loadsvg (src) {
         if (!doc) return;
         if (doc.readyState !== 'complete'
         && doc.readyState !== 'interactive') return;
+        if (!doc.querySelector('svg')) return;
+        if (!doc.querySelector('svg').style) return;
         clearInterval(iv);
         onload(frame);
     }
@@ -63,14 +71,14 @@ function loadsvg (src) {
             if (wd > hd) { // wider
                 var z = parseInt(istyle.height) / parseInt(svgstyle.width)
                     * parseInt(istyle.width) / parseInt(svgstyle.height)
-                    * 0.6
+                    * 0.4
                 ;
                 svg.style.zoom = z;
             }
             else { // taller
                 var z = parseInt(istyle.width) / parseInt(svgstyle.height)
                     * parseInt(istyle.height) / parseInt(svgstyle.width)
-                    * 0.6
+                    * 0.4
                 ;
                 svg.style.zoom = z;
             }
@@ -128,7 +136,7 @@ window.addEventListener('keydown', function (ev) {
     }
     else if ((ev.keyCode === 52 && ev.shiftKey) // $
     || ev.keyCode === 35) { // end
-        show(slides.length - 1);
+        show(state.slides.length - 1);
     }
 });
 
