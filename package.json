@@ -1,4 +1,9 @@
 {
+  "name": "xslide",
+  "version": "1.0.0",
+  "bin": {
+    "xslide": "bin/cmd.js"
+  },
   "scripts": {
     "dist": "browserify browser.js | uglify -cm > public/bundle.js",
     "build": "browserify browser.js -o public/bundle.js",
