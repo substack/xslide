@@ -4,7 +4,7 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 var ecstatic = require('ecstatic');
-var st = ecstatic(path.join(__dirname, '../public'));
+var st0 = ecstatic(path.join(__dirname, '../public'));
 
 var minimist = require('minimist');
 var argv = minimist(process.argv.slice(2), {
@@ -16,6 +16,7 @@ if (!file) {
     console.error('specify a markdown file as the first argument');
     process.exit(1);
 }
+var st1 = ecstatic(path.dirname(file));
 
 var server = http.createServer(function (req, res) {
     if (req.url === '/slides.md') {
@@ -29,7 +30,11 @@ var server = http.createServer(function (req, res) {
         return;
     }
     if (/^\/\d+$/.test(req.url)) req.url = '/';
-    st(req, res)
+    if (req.url === '/style.css' || req.url === '/'
+    || req.url === '/bundle.js') {
+        st0(req, res);
+    }
+    else st1(req, res);
 });
 server.listen(argv.port, function () {
     console.error('listening on :' + server.address().port);
