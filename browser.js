@@ -45,6 +45,7 @@ function loadsvg (src) {
     }
     
     function onload (frame) {
+        window.scrollTo(0, 0);
         window.iframe = frame;
         window.iwin = frame.contentWindow;
         window.idoc = frame.contentWindow.document;
@@ -141,4 +142,5 @@ function show (n) {
     state.current = n;
     window.history.pushState(null, String(n), '/' + n);
     loop.update(state);
+    window.scrollTo(0, 0);
 }
