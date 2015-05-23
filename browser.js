@@ -80,13 +80,24 @@ function loadsvg (src) {
 function render (state) {
     if (!has(state.slides, state.current)) return empty();
     var txt = state.slides[state.current];
-    var lines = txt.split('\n');
+    var lines = txt.split(/(<script[^>]*>[\s\S]*?<\/script[^>]*>)|\n/i)
+        .filter(Boolean)
+    ;
     return h('pre.slide', [
         lines.map(function (line) {
             var incode = false, m;
             if (/^```/.test(line)) incode = !incode;
-            if (!incode && /^#/.test(line)) {
+            if (/^<script/i.test(line)) {
+                return h('script', line
+                    .replace(/^<script[^>]*>/i, '')
+                    .replace(/<\/script[^>]*>$/i, '')
+                );
+            }
+            else if (!incode && /^#/.test(line)) {
                 return h('span', { 'font-color': 'purple' }, line + '\n');
+            }
+            else if (m = /^\[([^\]]+)\]\(([^\)]+)\)/.exec(line)) {
+                return h('a', { href: m[2] }, m[1]);
             }
             else if (m = /^!\[([^\]]+)\]\(([^\)]+)\)/.exec(line)) {
                 if (/\.svg$/.test(m[2]) && has(state.svgs, m[2])) {
