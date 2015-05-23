@@ -48,7 +48,32 @@ function loadsvg (src) {
         window.iframe = frame;
         window.iwin = frame.contentWindow;
         window.idoc = frame.contentWindow.document;
-        window.svg = window.idoc.querySelector('svg');
+        var svg = window.idoc.querySelector('svg');
+        window.svg = svg;
+        svg.style.margin = 'auto';
+        frameresize();
+        window.addEventListener('resize', frameresize);
+        
+        function frameresize () {
+            var istyle = window.getComputedStyle(frame);
+            var svgstyle = window.getComputedStyle(svg);
+            var wd = parseInt(svgstyle.width) - parseInt(istyle.width);
+            var hd = parseInt(svgstyle.width) - parseInt(istyle.height);
+            if (wd > hd) { // wider
+                var z = parseInt(istyle.height) / parseInt(svgstyle.width)
+                    * parseInt(istyle.width) / parseInt(svgstyle.height)
+                    * 0.8
+                ;
+                svg.style.zoom = z;
+            }
+            else { // taller
+                var z = parseInt(istyle.width) / parseInt(svgstyle.height)
+                    * parseInt(istyle.height) / parseInt(svgstyle.width)
+                    * 0.8
+                ;
+                svg.style.zoom = z;
+            }
+        }
     }
 }
 
