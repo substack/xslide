@@ -5,8 +5,40 @@
     "xslide": "bin/cmd.js"
   },
   "scripts": {
+    "prepublish": "npm run dist",
     "dist": "browserify browser.js | uglify -cm > public/bundle.js",
     "build": "browserify browser.js -o public/bundle.js",
     "watch": "watchify browser.js -o public/bundle.js -dv"
-  }
+  },
+  "description": "markdown slide viewer in the browser",
+  "main": "browser.js",
+  "dependencies": {
+    "ecstatic": "^0.8.0",
+    "minimist": "^1.1.1"
+  },
+  "devDependencies": {
+    "has": "^1.0.0",
+    "virtual-dom": "^2.0.1",
+    "main-loop": "^3.1.0",
+    "xhr": "^2.0.1",
+    "browserify": "^10.2.1",
+    "watchify": "^3.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/substack/xslide.git"
+  },
+  "keywords": [
+    "slide",
+    "presentation",
+    "markdown",
+    "browser",
+    "tslide"
+  ],
+  "author": "substack",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/substack/xslide/issues"
+  },
+  "homepage": "https://github.com/substack/xslide#readme"
 }
