@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "dist": "browserify browser.js | uglify -cm > public/bundle.js",
+    "build": "browserify browser.js -o public/bundle.js",
+    "watch": "watchify browser.js -o public/bundle.js -dv"
+  }
+}

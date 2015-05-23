@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  font-weight: bold;
+  font-family: monospace;
+}
+
+h1 {
+  font-size: 120%;
+  color: purple;
+}
+
+.slide {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  padding: 50px;
+}
