@@ -89,11 +89,11 @@ function loadsvg (src) {
 function render (state) {
     if (!has(state.slides, state.current)) return empty();
     var txt = state.slides[state.current];
-    var lines = txt.split(/(<script[^>]*>[\s\S]*?<\/script[^>]*>)|\n/i)
-        .filter(Boolean)
-    ;
+    var lines = txt.split(/(<script[^>]*>[\s\S]*?<\/script[^>]*>)|\n/i);
     return h('pre.slide', [
-        lines.map(function (line) {
+        lines.map(function (line, ix) {
+            if (!line && !lines[ix+1]) return h('div.break', [' '])
+            else if (!line) return ''
             var incode = false, m;
             if (/^```/.test(line)) incode = !incode;
             if (/^<script/i.test(line)) {
@@ -115,7 +115,10 @@ function render (state) {
                 else if (/\.svg$/.test(m[2])) {
                     return loadsvg(m[2]);
                 }
-                else return h('img', { src: m[2] });
+                else return h('img', {
+                    src: m[2],
+                    style: 'max-width: 100%; max-height: 100%'
+                });
             }
             else return h('span', line + '\n');
         })

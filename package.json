@@ -6,7 +6,7 @@
   },
   "scripts": {
     "prepublish": "npm run dist",
-    "dist": "browserify browser.js | uglify -cm > public/bundle.js",
+    "dist": "browserify browser.js | uglifyjs -cm > public/bundle.js",
     "build": "browserify browser.js -o public/bundle.js",
     "watch": "watchify browser.js -o public/bundle.js -dv"
   },
@@ -17,12 +17,13 @@
     "minimist": "^1.1.1"
   },
   "devDependencies": {
-    "has": "^1.0.0",
-    "virtual-dom": "^2.0.1",
-    "main-loop": "^3.1.0",
-    "xhr": "^2.0.1",
     "browserify": "^10.2.1",
-    "watchify": "^3.2.1"
+    "has": "^1.0.0",
+    "main-loop": "^3.1.0",
+    "uglify-js": "^2.6.2",
+    "virtual-dom": "^2.0.1",
+    "watchify": "^3.2.1",
+    "xhr": "^2.0.1"
   },
   "repository": {
     "type": "git",

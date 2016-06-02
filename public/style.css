@@ -24,3 +24,7 @@ h1 {
   height: 100%;
   border-width: 0px;
 }
+
+.break {
+  height: 0.5em;
+}
